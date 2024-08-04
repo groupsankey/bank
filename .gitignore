@@ -1,3 +1,2 @@
 node_modules/
-backend/serverconnection/
-backend/serverconnection/demo_db_connection.js
+backend/demo_db_connection.js
