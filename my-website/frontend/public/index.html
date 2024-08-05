@@ -3,43 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Map Example</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <style>
-    #map {
-      height: 500px;
-      width: 100%;
-    }
-  </style>
+  <title>Project Home</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>My Zoomable Map</h1>
-  <div id="map"></div>
+  <header>
+    <h1>Bench Locator</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="seekBench.html">Seek Bench</a></li>
+        <li><a href="addBench.html">Add Bench</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    // Initialize the map and set its view to Tunalı Hilmi Street in Çankaya, Ankara, Turkey
-    var map = L.map('map').setView([39.9117, 32.8606], 13);
+  <section id="project-description">
+    <h2>Project Description</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum...</p>
+  </section>
 
-    // Add a tile layer to the map using OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+  <section id="project-locations">
+    <h2>Project Locations</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum...</p>
+  </section>
 
-    // Define a custom icon
-    var benchIcon = L.icon({
-      iconUrl: 'bench.png', // Path to your custom icon image
-      iconSize: [38, 38],   // Size of the icon
-      iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location
-      popupAnchor: [0, -38] // Point from which the popup should open relative to the iconAnchor
-    });
+  <section id="project-guide">
+    <h2>How to Use the Project</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum...</p>
+  </section>
 
-    // Add a marker with the custom icon to the specified coordinates
-    var bookmarkCoords = [39.9117, 32.8606];
-    var marker = L.marker(bookmarkCoords, { icon: benchIcon }).addTo(map);
-
-    // Bind a popup to the marker with a custom message
-    marker.bindPopup('<b>Bookmark</b><br>This is Tunalı Hilmi Street.').openPopup();
-  </script>
+  <footer>
+    <p>&copy; 2024 Bench Locator</p>
+  </footer>
 </body>
 </html>
