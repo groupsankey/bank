@@ -19,7 +19,14 @@
     </nav>
   </header>
 
-  <div id="map"></div>
+  <div id="map-container">
+    <div id="map"></div>
+    <div id="button-container">
+      <button type="button" id="find-location-btn">Find My Location</button>
+      <button type="button" id="add-current-location-btn">Add Bench at Current Location</button>
+    </div>
+  </div>
+
   <div id="form-container">
     <form id="bench-form">
       <input type="hidden" id="lat" name="lat">

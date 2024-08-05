@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  var map = L.map('map').setView([39.9334, 32.8597], 13); // Center on Ankara with zoom level 13
+  var map = L.map('map').setView([39.9334, 32.8597], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    center: [39.9170, 32.8597], // Center on Çankaya
-    zoom: 15, // Initial zoom level
-    minZoom: 12, // Minimum zoom level to prevent zooming out too much
+    center: [39.9170, 32.8597],
+    zoom: 15,
+    minZoom: 12,
     maxZoom: 22,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   var latInput = document.getElementById('lat');
   var lngInput = document.getElementById('lng');
   var cancelButton = document.getElementById('cancel-btn');
+  var findLocationButton = document.getElementById('find-location-btn');
+  var addCurrentLocationButton = document.getElementById('add-current-location-btn');
 
   var southWest = L.latLng(39.8000, 32.8000),
       northEast = L.latLng(40.0500, 33.0000);
@@ -31,6 +33,50 @@ document.addEventListener('DOMContentLoaded', () => {
     formContainer.style.display = 'block';
     formContainer.style.left = e.originalEvent.pageX + 'px';
     formContainer.style.top = e.originalEvent.pageY + 'px';
+  });
+
+  findLocationButton.addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        L.marker([lat, lng], {
+          icon: L.icon({
+            iconUrl: '../photos/blue_dot.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+          })
+        }).addTo(map)
+          .bindPopup('You are here!')
+          .openPopup();
+
+        map.setView([lat, lng], 15); // Zoom in on user's location
+      }, error => {
+        alert('Unable to retrieve location.');
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
+  });
+
+  addCurrentLocationButton.addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        latInput.value = lat;
+        lngInput.value = lng;
+        formContainer.style.display = 'block';
+        map.setView([lat, lng], 15);
+      }, error => {
+        alert('Unable to retrieve location.');
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
   });
 
   benchForm.onsubmit = function(e) {
