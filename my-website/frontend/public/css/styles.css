@@ -55,5 +55,13 @@ body {
     background-color: #f2f2f2;
   }
 
+  #three-container {
+    width: 100%;
+    height: 400px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  
   
   
