@@ -33,13 +33,15 @@ app.get('/addBench', (req, res) => {
 });
 
 app.post('/add-bench', (req, res) => {
-  const { lat, lng, type, place, rating } = req.body;
-  const query = 'INSERT INTO benches (lat, lng, type, place, rating) VALUES (?, ?, ?, ?, ?)';
-  connection.query(query, [lat, lng, type, place, rating], (err, result) => {
+  const { lat, lng, type, place, rating, material } = req.body;
+  const query = 'INSERT INTO benches (lat, lng, type, rating, material) VALUES (?, ?, ?, ?, ?, ?)';
+  connection.query(query, [lat, lng, type, place, rating, material], (err, result) => {
     if (err) throw err;
     res.send('Bench added successfully');
   });
 });
+
+
 
 app.get('/benches', (req, res) => {
   const query = 'SELECT * FROM benches';
@@ -48,6 +50,7 @@ app.get('/benches', (req, res) => {
     res.json(results);
   });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

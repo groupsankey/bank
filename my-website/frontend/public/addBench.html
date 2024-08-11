@@ -32,17 +32,28 @@
       <input type="hidden" id="lat" name="lat">
       <input type="hidden" id="lng" name="lng">
       <label for="type">Bench Type:</label>
-      <input type="text" id="type" name="type" required><br>
+      <select id="type" name="type" required>
+        <option value="municipal">Municipal Bench</option>
+        <option value="private">Private Bench</option>
+      </select><br>
       <label for="place">Place:</label>
       <input type="text" id="place" name="place" required><br>
       <label for="rating">Rating (out of 10):</label>
-      <input type="number" id="rating" name="rating" min="1" max="10" required><br>
+      <input type="range" id="rating" name="rating" min="1" max="10" required><br>
+      <label for="material">Material:</label>
+      <select id="material" name="material" required>
+        <option value="metal">Metal</option>
+        <option value="wood">Wood</option>
+        <option value="plastic">Plastic</option>
+      </select><br>
       <button type="submit">Add Bench</button>
       <button type="button" id="cancel-btn">Cancel</button>
     </form>
+    
   </div>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="js/addBench.js"></script>
+
 </body>
 </html>

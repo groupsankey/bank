@@ -19,7 +19,9 @@
     </nav>
   </header>
 
-  <div id="map"></div>
+  <div id="map-container">
+    <div id="map"></div>
+  </div>
   <button id="locate-btn">Find My Location</button>
   <table id="bench-table">
     <thead>
@@ -30,10 +32,12 @@
         <th>Type</th>
         <th>Place</th>
         <th>Rating</th>
+        <th>Material</th> <!-- New Column -->
       </tr>
     </thead>
     <tbody></tbody>
   </table>
+  
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="js/seekBench.js"></script>

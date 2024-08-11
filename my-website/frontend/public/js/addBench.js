@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   var map = L.map('map').setView([39.9334, 32.8597], 13);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     center: [39.9170, 32.8597],
     zoom: 15,
     minZoom: 12,
@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   var benchForm = document.getElementById('bench-form');
   var latInput = document.getElementById('lat');
   var lngInput = document.getElementById('lng');
+  var ratingInput = document.getElementById('rating');
+  var typeInput = document.getElementById('type');
+  var materialInput = document.getElementById('material');
   var cancelButton = document.getElementById('cancel-btn');
   var findLocationButton = document.getElementById('find-location-btn');
   var addCurrentLocationButton = document.getElementById('add-current-location-btn');
@@ -82,9 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
   benchForm.onsubmit = function(e) {
     e.preventDefault();
     var formData = new FormData(benchForm);
+    
+    // Convert form data to an object and add the rating, type, and material
+    var data = Object.fromEntries(formData);
+    data['rating'] = ratingInput.value;
+    data['type'] = typeInput.value;
+    data['material'] = materialInput.value;
+
     fetch('/add-bench', {
       method: 'POST',
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json'
       }
