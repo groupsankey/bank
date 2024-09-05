@@ -53,6 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Adjust camera position
   camera.position.set(0, 20, 30); // Moved camera higher and further from the model
 
+  // Add camera holder
+  const cameraHolder = new THREE.Object3D();
+  cameraHolder.add(camera);
+  scene.add(cameraHolder);
+
   // Movement controls
   const controls = {
     forward: false,
@@ -114,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-      // Rotate camera based on mouse movement
-      camera.rotation.y -= movementX * 0.002; // Adjust sensitivity
+      // Rotate cameraHolder instead of camera
+      cameraHolder.rotation.y -= movementX * 0.002; // Adjust sensitivity
       camera.rotation.x -= movementY * 0.002; // Adjust sensitivity
       camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x)); // Clamp up/down rotation
     };
@@ -141,31 +146,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const animate = function () {
     requestAnimationFrame(animate);
 
-    // Calculate forward direction based on camera orientation
+    // Calculate forward direction based on cameraHolder orientation
     const direction = new THREE.Vector3();
-    camera.getWorldDirection(direction);
+    cameraHolder.getWorldDirection(direction);
     direction.y = 0; // Ignore vertical direction
     direction.normalize(); // Normalize direction vector
 
     // Horizontal movement based on direction
-    if (controls.forward) camera.position.add(direction.clone().multiplyScalar(moveSpeed));
-    if (controls.backward) camera.position.add(direction.clone().negate().multiplyScalar(moveSpeed));
+    if (controls.forward) cameraHolder.position.add(direction.clone().multiplyScalar(moveSpeed));
+    if (controls.backward) cameraHolder.position.add(direction.clone().negate().multiplyScalar(moveSpeed));
     if (controls.left) {
-      direction.cross(new THREE.Vector3(0, 1, 0)); // Get left direction
-      camera.position.add(direction.clone().multiplyScalar(moveSpeed));
+      const leftDirection = new THREE.Vector3(-direction.z, 0, direction.x);
+      cameraHolder.position.add(leftDirection.multiplyScalar(moveSpeed));
     }
     if (controls.right) {
-      direction.cross(new THREE.Vector3(0, 1, 0)); // Get right direction
-      camera.position.add(direction.clone().negate().multiplyScalar(moveSpeed));
+      const rightDirection = new THREE.Vector3(direction.z, 0, -direction.x);
+      cameraHolder.position.add(rightDirection.multiplyScalar(moveSpeed));
     }
 
     // Vertical movement
     velocity.y += gravity;
-    camera.position.y += velocity.y;
+    cameraHolder.position.y += velocity.y;
 
     // Check if on the ground
-    if (camera.position.y <= 0.5) {
-      camera.position.y = 0.5;
+    if (cameraHolder.position.y <= 0.5) {
+      cameraHolder.position.y = 0.5;
       canJump = true;
       velocity.y = 0;
     }
