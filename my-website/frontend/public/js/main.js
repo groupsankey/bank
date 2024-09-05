@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderer.setSize(container.clientWidth, container.clientHeight);
   container.appendChild(renderer.domElement);
 
+  // Create camera holder
+  const cameraHolder = new THREE.Object3D();
+  scene.add(cameraHolder);
+  cameraHolder.add(camera);
+
   // Add ambient light
   const ambientLight = new THREE.AmbientLight(0x404040, 2); // Soft white light
   scene.add(ambientLight);
@@ -29,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load GLTF model
   const loader = new THREE.GLTFLoader();
   loader.load(
-    //'../models/bench/scene.gltf',
     '../models/city/scene.gltf',
     function (gltf) {
       const bench = gltf.scene;
@@ -37,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Adjust model position and scale
       bench.position.y = 0; // Place model on top of the ground
-      //bench.scale.set(0.085, 0.085, 0.085); // Make model smaller
       bench.scale.set(0.1, 0.1, 0.1);
 
       console.log('Model loaded successfully'); // Verify model load
@@ -50,13 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-  // Adjust camera position
-  camera.position.set(0, 20, 30); // Moved camera higher and further from the model
-
-  // Add camera holder
-  const cameraHolder = new THREE.Object3D();
-  cameraHolder.add(camera);
-  scene.add(cameraHolder);
+  // Adjust camera holder position
+  cameraHolder.position.set(0, 20, 30); // Moved camera higher and further from the model
 
   // Movement controls
   const controls = {
@@ -73,15 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (event) => {
     switch (event.code) {
       case 'KeyW':
-        controls.forward = true;
-        break;
-      case 'KeyS':
         controls.backward = true;
         break;
-      case 'KeyD': // Switch 'A' and 'D' functionality
+      case 'KeyS':
+        controls.forward = true;
+        break;
+      case 'KeyD':
         controls.left = true;
         break;
-      case 'KeyA': // Switch 'A' and 'D' functionality
+      case 'KeyA':
         controls.right = true;
         break;
       case 'Space':
@@ -96,15 +94,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keyup', (event) => {
     switch (event.code) {
       case 'KeyW':
-        controls.forward = false;
-        break;
-      case 'KeyS':
         controls.backward = false;
         break;
-      case 'KeyD': // Switch 'A' and 'D' functionality
+      case 'KeyS':
+        controls.forward = false;
+        break;
+      case 'KeyD':
         controls.left = false;
         break;
-      case 'KeyA': // Switch 'A' and 'D' functionality
+      case 'KeyA':
         controls.right = false;
         break;
     }
@@ -119,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-      // Rotate cameraHolder instead of camera
+      // Rotate cameraHolder based on mouse movement
       cameraHolder.rotation.y -= movementX * 0.002; // Adjust sensitivity
       camera.rotation.x -= movementY * 0.002; // Adjust sensitivity
       camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x)); // Clamp up/down rotation
@@ -156,11 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (controls.forward) cameraHolder.position.add(direction.clone().multiplyScalar(moveSpeed));
     if (controls.backward) cameraHolder.position.add(direction.clone().negate().multiplyScalar(moveSpeed));
     if (controls.left) {
-      const leftDirection = new THREE.Vector3(-direction.z, 0, direction.x);
+      const leftDirection = new THREE.Vector3(0, 1, 0).cross(direction);
       cameraHolder.position.add(leftDirection.multiplyScalar(moveSpeed));
     }
     if (controls.right) {
-      const rightDirection = new THREE.Vector3(direction.z, 0, -direction.x);
+      const rightDirection = direction.cross(new THREE.Vector3(0, 1, 0));
       cameraHolder.position.add(rightDirection.multiplyScalar(moveSpeed));
     }
 

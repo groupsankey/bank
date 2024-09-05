@@ -1,3 +1,5 @@
+// Run "npm install mysql2" to install the required MySQL package
+
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
