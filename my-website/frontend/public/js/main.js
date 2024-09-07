@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load GLTF model
   const loader = new THREE.GLTFLoader();
   loader.load(
-    '../models/city/scene.gltf',
+    '../models/fnaf_arcades/scene.gltf',
     function (gltf) {
       const bench = gltf.scene;
       scene.add(bench);

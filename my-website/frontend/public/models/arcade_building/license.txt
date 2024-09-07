@@ -1,0 +1,11 @@
+Model Information:
+* title:	Old Broad Street Arcade Entrance
+* source:	https://sketchfab.com/3d-models/old-broad-street-arcade-entrance-337c2696b719429586c0782841ed5ea8
+* author:	artfletch (https://sketchfab.com/artfletch)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Old Broad Street Arcade Entrance" (https://sketchfab.com/3d-models/old-broad-street-arcade-entrance-337c2696b719429586c0782841ed5ea8) by artfletch (https://sketchfab.com/artfletch) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
